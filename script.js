@@ -17,11 +17,21 @@ function getCoordintes() {
     }
 
     function error(err) {
+        weatherDisplay.innerHTML = `
+            <div class="error">
+                ${err.message}
+            </div>
+            `
         console.warn(`ERROR(${err.code}): ${err.message}`);
         if (err.code == 1) {
             console.log("Permita a localização");
-            //navigator.geolocation.getCurrentPosition(success, error, options);
+            weatherDisplay.innerHTML = `
+            <div class="error">
+                Permita a localização
+            </div>
+            `
         }
+
     }
 
     navigator.geolocation.getCurrentPosition(success, error, options);
@@ -48,13 +58,16 @@ function getCity(condinates) {
         .catch(err => {
             console.error("Não foi possivel achar a localização");
             console.error(err);
+            weatherDisplay.innerHTML = `
+            <div class="error">
+                ${err.message}
+            </div>
+            `
 
         });
 
 
 }
-
-
 
 function getWeather(city, lat, lng) {
     let cityC = city && `q=${encodeURIComponent(city)}`;
@@ -78,13 +91,68 @@ function getWeather(city, lat, lng) {
         })
         .then((api) => {
             console.log(api);
+            if (api.cod == 200) {
+                let { main, name } = api;
+                let { temp, temp_max, temp_min } = main;
+
+                weatherDisplay.innerHTML = `
+                <div class="display">
+                    <h1> ${name}</h1>
+                    <div class="level1">
+                        <h2>
+                        ${temp} °C
+                        </h2>
+                    </div>
+                    <div class="level2">
+                        <h3>${temp_max} °C max</h3>
+                        <h3>${temp_min} °C min</h3>
+                    </div>
+                </div>
+            `;
+            } else {
+                weatherDisplay.innerHTML = `
+                    <div class="error">
+                        ${api.message}
+                    </div>
+                    `;
+            }
+
+
         })
         .catch(err => {
             console.error(err);
+            weatherDisplay.innerHTML = `
+            <div class="error">
+                ${err.message}
+            </div>
+            `
         });
 
 
 
 }
 
-getCoordintes();
+function searchWeather() {
+    let textBox = document.getElementById("locationText");
+    let city = textBox.value;
+    console.log(city);
+    textBox.value = "";
+    getWeather(city);
+
+}
+
+var weatherDisplay = "";
+
+function loadedPage() {
+    var input = document.getElementById("locationText");
+    weatherDisplay = document.getElementById("weather");
+
+    input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            searchWeather();
+        }
+    });
+}
+
+//getCoordintes();

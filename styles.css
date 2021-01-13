@@ -1,3 +1,71 @@
 * {
     margin: auto;
+    font-family: 'Roboto300', sans-serif;
+}
+
+body {
+    display: flex;
+    flex: 1;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("./back.jpg");
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.options {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid;
+    width: 100%;
+}
+
+.options div {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-box {
+    border-right: 1px solid;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+}
+
+.level2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.level2 h3 {
+    margin: 1rem 2rem;
+}
+
+.error {
+    color: red;
+}
+
+#locationText {
+    margin-bottom: 1rem;
+}
+
+.title {
+    margin-bottom: 1rem;
+    border-bottom: 3px solid;
+    width: 100%;
+    text-align: center;
+    font-size: 3rem;
+}
+
+#weather {
+    padding: 2rem;
+    font-size: 2rem;
+    font-family: 'Roboto300', sans-serif;
 }
